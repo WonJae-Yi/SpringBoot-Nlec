@@ -18,7 +18,7 @@
 	<tiles:insertAttribute name = "header"/>
 
     <!-- --------------------------- <body> --------------------------------------- -->
-	<tiles:insertAttribute name = "body"/>
+	<tiles:insertAttribute name = "main"/>
 
     <!-- ------------------- <footer> --------------------------------------- -->
 	<tiles:insertAttribute name = "footer"/>

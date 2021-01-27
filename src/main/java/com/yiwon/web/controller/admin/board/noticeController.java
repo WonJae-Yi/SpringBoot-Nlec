@@ -13,19 +13,19 @@ public class noticeController {
 		
 		model.addAttribute("test", "Hello~Devsssss");
 		
-		return "admin/board/notice/list"; 
+		return "admin.board.notice.list"; 
 	}
 	
 	@RequestMapping("detail") 
 	public String detail() {
 		
-		return "admin/board/notice/detail";
+		return "admin.board.notice.detail";
 	}
 	
 	@RequestMapping("reg")
 	public String reg() {
 		
-		return "admin/board/notice/reg";
+		return "admin.board.notice.reg";
 	}
 
 

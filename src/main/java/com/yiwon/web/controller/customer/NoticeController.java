@@ -14,13 +14,14 @@ public class NoticeController {
 		
 		model.addAttribute("test", "Hello~Devsssss");
 		
-		return "customer/notice/list";  //매핑주소와 동일한 부분은 생략가능
+//		return "customer/notice/list";  //ResourceViewResolver, 매핑주소와 동일한 부분은 생략가능
+		return "customer.notice.list";  //TilesViewResolver
 	}
 	
 	@RequestMapping("detail") //url mapping
 	public String detail() {
 		
-		return "customer/notice/detail";
+		return "customer.notice.detail";
 	}
 
 }

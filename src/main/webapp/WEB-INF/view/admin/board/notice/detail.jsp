@@ -21,39 +21,39 @@
 		<table class="table">
 			<tbody>
 				<tr>
-								<th>제목</th>
-								<td class="text-align-left text-indent text-strong text-orange" colspan="3">${n.title}</td>
-								<tr>
-									<th>작성일</th>
-									<td class="text-align-left text-indent" colspan="3"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${n.regdate}"></fmt:formatDate></td>
-								</tr>
-								<tr>
-									<th>작성자</th>
-									<td>${n.writerid}</td>
-									<th>조회수</th>
-									<td><fmt:formatNumber pattern="#,##0" value="${n.hit}"></fmt:formatNumber></td>
-								</tr>
-								<tr>
-									<th>첨부파일</th>
-									<td colspan="3" class="text-align-left text-indent" >
-									<c:forTokens var="fileName" items="${n.files}" delims="," varStatus="st">
-									
-										<c:set var="style" value="" />
-										<c:if test="${fn:endsWith(fileName, '.zip') }">
-											<c:set var="style" value="font-weight:bold; color:red" />
-										
-										</c:if>
-										<a download href="/JSPBasic/upload/${fileName}" style="${style}">${fn:toUpperCase(fileName)}</a>
-										<c:if test="${!st.last}">
-										/
-										</c:if>
-									</c:forTokens>
-									
-									</td>
-								</tr>
-								<tr class="content">
-									<td colspan="4">${n.content}</td>
-								</tr>
+				<th>제목</th>
+				<td class="text-align-left text-indent text-strong text-orange" colspan="3">${n.title}</td>
+				<tr>
+					<th>작성일</th>
+					<td class="text-align-left text-indent" colspan="3"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${n.regdate}"></fmt:formatDate></td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td>${n.writerid}</td>
+					<th>조회수</th>
+					<td><fmt:formatNumber pattern="#,##0" value="${n.hit}"></fmt:formatNumber></td>
+				</tr>
+				<tr>
+					<th>첨부파일</th>
+					<td colspan="3" class="text-align-left text-indent" >
+					<c:forTokens var="fileName" items="${n.files}" delims="," varStatus="st">
+					
+						<c:set var="style" value="" />
+						<c:if test="${fn:endsWith(fileName, '.zip') }">
+							<c:set var="style" value="font-weight:bold; color:red" />
+						
+						</c:if>
+						<a download href="/JSPBasic/upload/${fileName}" style="${style}">${fn:toUpperCase(fileName)}</a>
+						<c:if test="${!st.last}">
+						/
+						</c:if>
+					</c:forTokens>
+					
+					</td>
+				</tr>
+				<tr class="content">
+					<td colspan="4">${n.content}</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

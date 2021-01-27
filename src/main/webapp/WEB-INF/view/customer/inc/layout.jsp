@@ -35,7 +35,7 @@
 			<tiles:insertAttribute name = "aside"/>
 
 			<!-- --------------------------- main --------------------------------------- -->
-			<tiles:insertAttribute name = "body"/>
+			<tiles:insertAttribute name = "main"/>
 
 		</div>
 	</div>
