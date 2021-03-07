@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yiwon.web.entity.Notice;
+import com.yiwon.web.entity.NoticeView;
 import com.yiwon.web.service.NoticeService;
 
 //@RestController  //반환하는 모든것들을 문자열로 반환한다. 
@@ -21,7 +22,12 @@ public class NoticeController {
 	@RequestMapping("list") //url mapping
 	public String list(Model model) {
 		
-		List<Notice> list = service.getList();
+		int page = 2;
+		String field = "title";
+		String query = "";
+		String pub = "0";
+		
+		List<NoticeView> list = service.getViewList(page, field, query, pub);
 		
 		model.addAttribute("list", list);
 		

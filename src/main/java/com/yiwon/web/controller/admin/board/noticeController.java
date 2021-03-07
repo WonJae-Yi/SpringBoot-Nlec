@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yiwon.web.entity.Notice;
+import com.yiwon.web.entity.NoticeView;
 import com.yiwon.web.service.NoticeService;
 
 @Controller("adminNoticeController")
@@ -19,8 +20,11 @@ public class noticeController {
 	
 	@RequestMapping("list") //url mapping
 	public String list() {
-		
-		List<Notice> list = service.getList();
+		int page = 1;
+		String field = "title";
+		String query = "";
+		String pub = "1";
+		List<NoticeView> list = service.getViewList(page, field, query, pub);
 		
 		return "admin.board.notice.list"; 
 	}
@@ -28,7 +32,7 @@ public class noticeController {
 	@RequestMapping("detail") 
 	public String detail() {
 		
-		Notice notice = service.getDetail(1);
+		Notice notice = service.getViewDetail(1);
 		
 		return "admin.board.notice.detail";
 	}

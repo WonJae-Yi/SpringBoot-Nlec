@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiwon.web.dao.NoticeDao">
+
+	<resultMap type="com.yiwon.web.entity.NoticeView" id="noticeViewMap">
+		<result property="writerid" column="writer_id" />
+	</resultMap>
+	<resultMap type="com.yiwon.web.entity.Notice" id="noticeMap">
+		<result property="writerid" column="writer_id" />
+	</resultMap>
+	
+  <select id="getViewList" resultMap="noticeViewMap">
+	    select * 
+	    from (select row_number() over(order by regdate desc, id desc) no, a.*
+	    	from view_notice a
+	    	<trim prefix="where" prefixOverrides="and | or ">
+	    	<if test="query != null and query != ' '">
+	    		${field} like '%${query}%'
+	    	</if>
+	    		and pub &lt;= #{pub} 
+	    	</trim>
+	    	)
+		where no between #{frNo} and #{toNo}
+  </select>
+  
+  <select id="getCount">
+  		select count(*)
+  		from notice
+  		where ${field} like '%${query}%' 
+  </select>
+  
+  <select id="getViewDetail" resultMap="noticeViewMap">
+  		select *
+  		from view_notice
+  		where id = #{id}
+  </select>
+  
+  <select id="getNext" resultMap="noticeViewMap">
+  		select /*+ index_desc(notice, notice_pk) */ *
+		from notice
+		where id &lt; #{id}
+		and rownum &lt;= 1
+  </select>
+  
+  <select id="getPrev" resultMap="noticeViewMap">
+  		select /*+ index_asc(notice, notice_pk) */ *
+		from notice
+		where id &gt; #{id}
+		and rownum &lt;= 1
+  </select>
+  
+  <update id="update" parameterType="com.yiwon.web.entity.Notice">
+  		update notice
+  		set title = #{title},
+  			content = #{content},
+  			hit = #{hit},
+  			pub = #{pub}
+  		where id = #{id}
+  </update>
+  
+  <insert id="insert" parameterType="com.yiwon.web.entity.Notice">
+  		insert into notice
+  			(id, title, writerid, content, regdate, hit, files, pub)
+  		values
+  			(SEQ_NOTICE_ID.NEXTVAL, #{title}, #{writerid}, #{content}, SYSTIMESTAMP, 0, NULL, #{pub})
+  </insert>
+  
+  <delete id="delete">
+  		delete from notice
+  		where id = #{id}
+  </delete>
+  
+  <delete id="deleteAll">
+  		delete from notice
+  		where id in 
+		<foreach item="id" index="index" collection="ids"
+				open="(" separator="," close=")">
+			#{id}
+		</foreach>
+  </delete>
+ 
+<!--   <update id="updatePubAll">
+  		update notice
+  		set pub = case id 
+  				<foreach item="id" collection="pubIds">
+					when #{id} then 1
+				</foreach>
+  				<foreach item="id" collection="closeIds">
+					when #{id} then 0
+				</foreach>
+				end
+  		
+  		where id in (
+  				<foreach item="id" collection="pubIds">
+					#{id}
+				</foreach>
+				,
+  				<foreach item="id" collection="closeIds">
+					#{id}
+				</foreach>
+				)
+  </update> -->
+  
+  <update id="updatePubAll">
+  		update notice 
+  		set pub = #{pub}
+  		where id in 
+  		<foreach item="id" index="index" collection="ids"
+				open="(" separator="," close=")">
+			#{id}
+		</foreach>
+  </update>
+ 
+ 
+	
+</mapper>
