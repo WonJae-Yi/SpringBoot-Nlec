@@ -22,7 +22,7 @@
 		<table class="table">
 			<tbody>
 				<tr>
-					<th>제목</th>
+					<th>Titlw</th>
 					<td class="text-align-left text-indent text-strong text-orange"
 						colspan="3">${n.title}</td>
 				</tr>

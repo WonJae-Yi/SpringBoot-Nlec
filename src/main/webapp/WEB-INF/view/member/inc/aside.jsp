@@ -28,15 +28,4 @@
 		</ul>
 	</nav>
 
-	<!-- <nav class="menu">
-					<h1>협찬광고</h1>
-					<ul>
-		                <li style="width:181px;overflow:hidden;">                            
-                                             
-		                </li>  
-                        <li style="width:181px;overflow:hidden;">                            
-                                                
-		                </li>
-                    </ul>					
-				</nav> -->
 </aside>

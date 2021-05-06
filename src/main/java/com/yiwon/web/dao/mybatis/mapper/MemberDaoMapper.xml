@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiwon.web.dao.MemberDao">
+
+	<insert id="insert" parameterType="com.yiwon.web.entity.Member">
+		insert into member
+		(id, pwd, name, gender, birthday, phone, regdate, email)
+		values
+		(#{id}, #{pwd}, #{name}, #{gender}, #{birthday}, #{phone}, SYSTIMESTAMP,
+		#{email})
+	</insert>
+
+	<select id="login" resultType="int">
+		select count(*)
+		from member
+		where id = #{id}
+		and pwd = #{pwd}
+	</select>
+	
+	<select id="idChk" resultType="int">
+		select count(*)
+		from member
+		where id = #{id}
+	</select>
+
+
+</mapper>

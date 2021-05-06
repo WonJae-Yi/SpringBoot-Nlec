@@ -11,6 +11,7 @@ public class HomeController {
 		
 		return "home.index";
 	}
+	
 	@RequestMapping("/help") //url mapping
 	public String help() {
 		

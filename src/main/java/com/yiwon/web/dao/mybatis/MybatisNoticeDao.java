@@ -12,68 +12,77 @@ import com.yiwon.web.entity.NoticeView;
 
 @Repository
 public class MybatisNoticeDao implements NoticeDao {
+
+	private NoticeDao mapper;
 	
 	@Autowired
-	private SqlSession sqlSession;
-
-	@Override
-	public List<NoticeView> getViewList(int frNo, int toNo, String field, String query, String pub) {
-		NoticeDao noticeDao = sqlSession.getMapper(NoticeDao.class);
-		return noticeDao.getViewList(frNo, toNo, field, query, pub);
+	public MybatisNoticeDao(SqlSession sqlSession) {
+		mapper = sqlSession.getMapper(NoticeDao.class);		
 	}
 
 	@Override
-	public int getCount(String field, String query) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<NoticeView> getViewList(int frNo, int toNo, String field, String query, String pub) {		
+		return mapper.getViewList(frNo, toNo, field, query, pub);
+	}
+
+	@Override
+	public int getCount(String field, String query, String pub) {
+		
+		return mapper.getCount(field, query, pub);
 	}
 
 	@Override
 	public NoticeView getViewDetail(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return mapper.getViewDetail(id);
 	}
 
 	@Override
 	public Notice getNext(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return mapper.getNext(id);
 	}
 
 	@Override
 	public Notice getPrev(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return mapper.getPrev(id);
 	}
 
 	@Override
 	public int update(Notice notice) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return mapper.update(notice);
+	}
+	
+	@Override
+	public int addHit(Notice notice) {
+		
+		return mapper.addHit(notice);
 	}
 
 	@Override
 	public int insert(Notice notice) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return mapper.insert(notice);
 	}
 
 	@Override
 	public int delete(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return mapper.delete(id);
 	}
 
 	@Override
 	public int deleteAll(int[] ids) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return mapper.deleteAll(ids);
 	}
 
 	@Override
-	public int updatePubAll(int[] pubIds, boolean pub) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updatePubAll(int[] Ids, String pub) {
+		
+		return mapper.updatePubAll(Ids, pub);
 	}
 	
 	

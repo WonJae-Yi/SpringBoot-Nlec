@@ -18,18 +18,20 @@ public class NoticeServiceImp implements NoticeService {
 
 	@Override
 	public NoticeView getViewDetail(int id) {
+		
 		NoticeView notice = noticeDao.getViewDetail(id);
+		noticeDao.addHit(notice);
 		return notice;
 	}
 
 	@Override
-	public List<NoticeView> getViewList() {
+	public List<NoticeView> getViewList(String pub) {
 		// TODO Auto-generated method stub
-		return getViewList(1,"title","","0");
+		return getViewList(1,"title","",pub);
 	}
 
 	@Override
-	public List<NoticeView> getViewList(String field, String query) {
+	public List<NoticeView> getViewList(String field, String query, String pub) {
 	
 		return getViewList(1, field, query, "0");
 	}
@@ -38,6 +40,8 @@ public class NoticeServiceImp implements NoticeService {
 	public List<NoticeView> getViewList(int page, String field, String query, String pub) {
 		int frNo = 1 + (page - 1) * 10;
 		int toNo = page * 10;
+		
+		System.out.println("NoticeService getViewList :" + query);
 		List<NoticeView> list = noticeDao.getViewList(frNo, toNo, field, query, pub);
 		return list;
 	}
@@ -45,13 +49,14 @@ public class NoticeServiceImp implements NoticeService {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return getCount("title","");
+		return getCount("title","","1");
 	}
 
 	@Override
-	public int getCount(String field, String query) {
+	public int getCount(String field, String query, String pub) {
+		System.out.println("NoticeService getCount pub:" + pub);
 		// TODO Auto-generated method stub
-		return noticeDao.getCount(field,query);
+		return noticeDao.getCount(field,query,pub);
 	}
 
 
@@ -69,9 +74,11 @@ public class NoticeServiceImp implements NoticeService {
 
 	@Override
 	public int updatePubAll(int[] pubIds, int[] closeIds) {
+		int result = 0;
+		result += noticeDao.updatePubAll(pubIds, "1");
+		result += noticeDao.updatePubAll(closeIds, "0");
 		
-		//return noticeDao.updatePubAll(pubIds, closeIds);
-		return noticeDao.updatePubAll(pubIds, true);
+		return result;
 	}
 
 	@Override

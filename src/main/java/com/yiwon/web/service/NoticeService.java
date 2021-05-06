@@ -8,14 +8,14 @@ import com.yiwon.web.entity.NoticeView;
 public interface NoticeService {
 
 	//기본 페이지를 요청할 때
-	List<NoticeView> getViewList();
+	List<NoticeView> getViewList(String pub);
 	//검색을 요청할때
-	List<NoticeView> getViewList(String field, String query);
+	List<NoticeView> getViewList(String field, String query,String pub);
 	//페이지를 요청할때
 	List<NoticeView> getViewList(int page, String field, String query, String pub);
 	
 	int getCount();
-	int getCount(String field, String query);
+	int getCount(String field, String query, String pub);
 	
 	//자세한 페이지 요청할 때
 	NoticeView getViewDetail(int id);

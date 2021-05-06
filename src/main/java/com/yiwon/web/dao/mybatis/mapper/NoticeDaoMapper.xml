@@ -12,23 +12,27 @@
 	</resultMap>
 	
   <select id="getViewList" resultMap="noticeViewMap">
-	    select * 
+	    select /* NoticeDao.getViewList */ * 
 	    from (select row_number() over(order by regdate desc, id desc) no, a.*
 	    	from view_notice a
-	    	<trim prefix="where" prefixOverrides="and | or ">
+	    	where 1 = 1
+	    	and ${field} like '%${query}%'
+	    	and pub &gt;= #{pub}
+<!-- 	    	<trim prefix="where" prefixOverrides="and | or ">
 	    	<if test="query != null and query != ' '">
-	    		${field} like '%${query}%'
+	    		and ${field} like '%${query}%'
 	    	</if>
 	    		and pub &lt;= #{pub} 
-	    	</trim>
+	    	</trim> -->
 	    	)
 		where no between #{frNo} and #{toNo}
   </select>
   
-  <select id="getCount">
+  <select id="getCount" resultType="int">
   		select count(*)
   		from notice
   		where ${field} like '%${query}%' 
+  		and pub &gt;= #{pub}
   </select>
   
   <select id="getViewDetail" resultMap="noticeViewMap">
@@ -60,9 +64,15 @@
   		where id = #{id}
   </update>
   
+  <update id="addHit" parameterType="com.yiwon.web.entity.Notice">
+  		update notice
+  		set hit = hit +1
+  		where id = #{id}
+  </update>
+  
   <insert id="insert" parameterType="com.yiwon.web.entity.Notice">
   		insert into notice
-  			(id, title, writerid, content, regdate, hit, files, pub)
+  			(id, title, writer_id, content, regdate, hit, files, pub)
   		values
   			(SEQ_NOTICE_ID.NEXTVAL, #{title}, #{writerid}, #{content}, SYSTIMESTAMP, 0, NULL, #{pub})
   </insert>
@@ -72,10 +82,11 @@
   		where id = #{id}
   </delete>
   
+  <!--  //collection으로 넘어온 값을 item에 하나씩 넣는다.-->
   <delete id="deleteAll">
   		delete from notice
   		where id in 
-		<foreach item="id" index="index" collection="ids"
+		<foreach item="id" index="index" collection="ids"  
 				open="(" separator="," close=")">
 			#{id}
 		</foreach>
